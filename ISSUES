@@ -1,0 +1,20 @@
+Some known issues with Pftpd
+----------------------------
+
+Inless Pftps is built with support for the RPAD service then Pftpd
+*never* will use the FTP-DATA (20) port for passive file transfers.
+
+This could potentially cause some trouble with firewalls requiring
+that data sessions originate *from* an address with source port 20
+(when using non-PASV connections). I've never seen this myself though...
+
+The reason it doesn't do that is that it drops all root privileges
+as early as possible, so it can't create new sockets and bind them
+to ports in the reserved range (<1024).
+
+With the RPAD services (the rpad daemon is included in the
+distribution (but only builds on certains systems - Solaris 2.7
+or newer (ie, systems with a working DOORS IPC mechanism)) it
+will contact the 'rpad' daemon (which runs as root) and will
+allocate, and bind (to port 20) a socket which will then be
+passed to Pftpd via the DOORS IPC mechanism).

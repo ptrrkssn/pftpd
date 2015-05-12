@@ -1,0 +1,59 @@
+# Makefile.in for Plib 1.0
+
+prefix = @prefix@
+libdir = @libdir@
+incdir = @incdir@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+DEFS=@DEFS@
+LIBS=@LIBS@
+
+CC = @CC@
+CFLAGS = @CFLAGS@ @CPPFLAGS@ $(DEFS) -I. -I.. -I$(srcdir)/..
+LDFLAGS = @LDFLAGS@
+INSTALL = @INSTALL@
+AR = ar
+RANLIB = @RANLIB@
+
+@SET_MAKE@
+
+GEN_LIBS =  libplib.a
+
+HDRS = server.h daemon.h petopt.h strl.h \
+	safeio.h safestr.h support.h str2.h \
+	timeout.h fdbuf.h pqueue.h avail.h \
+	dirlist.h ident.h aalloc.h strmatch.h
+
+OBJS =	server.o daemon.o petopt.o strl.o \
+	safeio.o safestr.o support.o str2.o \
+	timeout.o fdbuf.o pqueue.o avail.o \
+	dirlist.o ident.o aalloc.o strmatch.o
+
+
+all:	$(GEN_LIBS)
+
+plib.h:	$(HDRS)
+
+$(OBJS): plib.h
+
+libplib.a:	$(OBJS)
+	-rm -f $@ ; $(AR) -q $@ $(OBJS)
+	$(RANLIB) $@
+
+
+# Installing
+
+install: $(GEN_LIBS)
+	-mkdir -p $(libdir)
+	for P in $(GEN_LIBS) ; do \
+		$(INSTALL) -m 644 $${P} $(libdir); \
+	done
+
+
+
+# Cleaning up
+
+clean mostlyclean distclean maintainer-clean dist sign upload version:
+	@$(MAKE) -f $(srcdir)/Makefile.dist SRCDIR=$(srcdir) $@

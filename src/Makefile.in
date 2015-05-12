@@ -1,0 +1,65 @@
+# Makefile.in for Pftpd 1.0
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+sbindir = @sbindir@
+sysconfdir = @sysconfdir@
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+DEFS = @DEFS@ 
+LIBS = @LIBS@
+
+PLIB_CFLAGS =
+PLIB_LDFLAGS =
+
+CC = @CC@
+CFLAGS = @CFLAGS@ $(DEFS) $(PLIB_CFLAGS) -I. -I.. -I$(srcdir) -I$(srcdir)/..
+LDFLAGS = @LDFLAGS@ @LIBS@ $(PLIB_LDFLAGS)
+INSTALL = @INSTALL@
+
+LIBPLIB = ../plib/libplib.a
+
+TAR = tar
+
+@SET_MAKE@
+
+PROGRAMS = pftpd @RPAD@
+
+OBJS =	main.o request.o conf.o version.o \
+	ftpcmd.o ftplist.o ftpdata.o path.o \
+	xferlog.o rpa.o socket.o
+
+
+
+fail:
+	@echo 'Do not run make in this directory.'
+	@exit 1
+
+all:	$(PROGRAMS)
+
+pftpd:	$(OBJS) $(LIBPLIB)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(KOBJ) $(LIBPLIB) $(LDFLAGS)
+
+rpad:	rpad.o socket.o $(LIBPLIB)
+	$(CC) $(CFLAGS) -o $@ rpad.o socket.o $(LIBPLIB) $(LDFLAGS)
+
+
+# Installing
+install:	$(PROGRAMS)
+	-mkdir -p $(sbindir)
+	for P in $(PROGRAMS) ; do \
+		$(INSTALL) -m 755 $${P} $(sbindir); \
+	done
+
+
+
+# Cleaning up
+
+clean mostlyclean:
+	rm -f core *.o $(PROGRAMS) *~ \#*
+
+
+distclean maintainer-clean: mostlyclean
+	rm -f Makefile config.h

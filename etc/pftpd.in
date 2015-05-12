@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# pftpd control script
+#
+# You probably want to modify this!
+#
+
+STARTUP_ARGS="-Upub/ftp -X/var/log/pftpd/xferlog -P/var/run/pftpd.pid"
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+SBINDIR=@sbindir@
+SYSCONFDIR=@sysconfdir@
+
+PFTPD=$SBINDIR/pftpd
+RPAD=$SBINDIR/rpad
+
+
+case $1 in
+
+start)
+	if [ -x $RPAD ]; then
+	    if pgrep rpad
+	    then
+		echo "RPAD already running (not restarted)"
+	    else
+		echo "Starting RPAD (used by Pftpd)... \c"
+		if $RPAD >>/var/log/rpad.log 2>&1
+		then
+		    echo "Done"
+
+		    # Sleep two seconds to give RPAD time to start	
+		    sleep 2
+		else
+		    echo "Failed"
+		fi
+	    fi
+	fi
+	if [ -x $PFTPD ]; then
+		echo "Starting Pftpd... \c"
+		if $PFTPD $STARTUP_ARGS >>/var/log/pftpd.log 2>&1
+		then
+		    echo "Done."
+		else
+		    echo "Failed"
+		    exit 1
+		fi
+	fi
+	;;
+
+stop)
+        pkill -x pftpd && echo 'Pftpd stopped.'
+	pkill -x rpad  && echo 'Rpad stopped.'
+	;;
+
+restart)
+        sh /etc/init.d/pftpd stop
+	sh /etc/init.d/pftpd start
+	;;
+
+*)
+	echo 'usage: /etc/init.d/pftpd {start|stop}'
+esac
+
+exit 0

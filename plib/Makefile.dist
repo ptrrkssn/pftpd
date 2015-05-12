@@ -1,0 +1,21 @@
+# Makefile.dist for Plib
+#
+# This file can not be used to build Plib - it's only used to
+# generate the distribution files
+#
+
+SRCDIR = .
+
+all:
+	@echo 'Sorry, this file (Makefile.dist) can not be used'
+	@echo 'to make Plib - use the ./configure script to'
+	@echo 'create a Makefile.'
+	@exit 1
+
+
+clean mostlyclean:
+	rm -f core *~ \#* *.o libplib.a
+
+distclean maintainer-clean: mostlyclean
+	rm -f Makefile config.h plib-config config.status config.log config.cache
+

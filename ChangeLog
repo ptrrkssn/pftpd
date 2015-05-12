@@ -1,0 +1,253 @@
+2007-09-07  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/dirlist.c: Fixed problem in dirent_dup()
+
+2005-04-05  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Throttle the maximum number of concurrent client connections
+	  to <max-file-descriptors>/3-8 to avoid out-of-files errors.
+
+2003-09-23  Peter Eriksson  <pen@lysator.liu.se>
+
+	* send_message(): Append a newline if message file doesn't
+	  end in one.
+
+2002-05-01  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Default data directory to /var/ftp if not specified on the
+	  command line/config file and no "ftp" user found.
+
+	* plib/server.c: Modified to run the server handling code as a
+	  subthread.
+
+	* plib/timeout.c: Modified to be more general and automatically
+	  handle the creation/termination of the timeout handling thread.
+
+	* src/main.c: Handle signals via sigwait() - now allows graceful
+	  termination of the server without killing any active clients
+	  (together with the plib/server&timeout fixes)
+
+2002-04-29  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Fixed a 8KB memory leak for each RPAD call in rpa.c
+
+2002-04-26  Peter Eriksson  <pen@lysator.liu.se>
+
+	* ctime()/cftime() changed to use localtime_r() and strftime().
+
+	* FTPDATA threads handling revamped.
+	
+2002-04-25  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Serialized the bind()/connect() calls when using Active FTP-DATA.
+
+	* Fixed some portability issues with Tru64 Unix.
+
+2002-04-23  Peter Eriksson  <pen@lysator.liu.se>
+
+	* variables 'try' changed to 'attempt'.
+
+	* s_inet_ntox() changed to not print port number.
+
+2002-04-23  Peter Eriksson  <pen@lysator.liu.se>
+
+	* NLST now supports wildcards
+
+	* configure/makefile threading issue solved.
+
+2002-04-22  Peter Eriksson  <pen@lysator.liu.se>
+
+	* MDTM implemented.
+	
+	* plib/safestr.c: s_strcasecmp() wasn't doing any case-insensitive
+	  anything...
+
+	* src/rpa.h: PATH_RPAD_DIR should be relative to PATH_SYSCONFDIR
+
+2002-04-22  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/aalloc: a_strdup(): Handle NULL pointers
+
+	* Added limited support for wildcards in LIST command.
+	
+2002-04-22  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Fix from jens@isy.liu.se to allow compilation on stone age
+	  operating systems without IPv6 :-)
+
+	* Fix in /etc/init.d/pftpd script to give rpad time to start
+
+	* Fixed startup code in rpad to create the door descriptor
+	  after fork() and not before which would cause the door to
+	  close immediately.
+
+	* Fixed the rpa client code to be more robust.
+
+2002-03-31  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/readdir.[ch]: Removed (not needed)
+
+	* Some Linux portability issues fixed.
+
+	* Fixed PASV to handle IPv4-in-IPv6 addresses
+
+	* plib/safeio.c: sendfile()/sendfilev() fixes
+
+	* plib/safeio.c: s_inet_ntox() - print IPv4-in-IPv6 addresses using IPv4 notation.
+
+	* RPAD (Restricted Port Allocation Daemon) support added. Now pftpd can use
+	  port 20 for PASV transfers and still not run as root.
+	  
+2002-03-27  Peter Eriksson  <pen@lysator.liu.se>
+
+	* ftpcmd.c: Added EPSV and EPRT command for full IPv6 support.
+
+2002-03-26  Peter Eriksson  <pen@lysator.liu.se>
+
+	* pqueue.[ch] updated.
+
+	* ftplist.c: Don't display ".." at top of listing
+
+	* plib/dirlist.c: Display date&time of files/dirs correctly again.
+
+	* ftpcmd.c: PORT command now handles IPv4 addresser received
+	  via a IPv6 socket.
+
+	* xferlog.c: Changed default mode of log file to 0644.
+
+2001-09-04  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Lots of IPv6 fixes (still not fully implemented though!)
+
+	* gid2str should now display group names
+
+2001-03-08  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Changed "IDENTD" -> "PFTPD" in sample /etc/pftpd.init script
+
+2000-09-13  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Added various fixes (mostly small memory leaks)
+	            (from Alex Kiernan <alexk@demon.net>)
+
+	* Some more (mostly cosmetical) changes found with gcc -Wall
+
+2000-07-04  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Fixed serious bug when retreiving multiple files in
+	  one session - would start N bytes into each file, where
+	  N is the size of the previous file sent (and fail if N is
+	  larger than the file to be retreived... Ugh) (problem
+	  due to data_start not being reset after a transfer...)
+
+	* Fixed a bug in path.c, causing problems with relative
+   	  pathnames.
+
+	* Display "/.message"-message if it exists.
+
+	* Default for login message is now /etc/welcome.txt.
+
+2000-06-29  Peter Eriksson  <pen@lysator.liu.se>
+
+	* path.c: Fixed strcpy() -> s_strcpy() to prevent
+	  buffer overruns.
+
+	* plib/support.c: osinfo_get() now has a bufsize argument
+	  and doesn't use sprintf() anymore.
+
+	* plib/safestr.c: s_strcasecmp() now really does a case insensitive
+	  string compare...
+
+2000-06-29  Peter Eriksson  <pen@lysator.liu.se>
+
+	* PASV mode tried to bind() to the *remote* side of
+	  the client connection. How on earth did this ever work? :-)
+
+1999-11-24  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/server.c: pthread_create() returns error code, not -1
+	
+	* plib/timeout.c: pthread_create() returns error code, not -1
+
+1999-08-09  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/strmatch.c: Add support for '[...]' wildcards
+
+	* ftplist.c: Fixed file mode printing bug
+
+1999-08-08  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/readdir.c: Add support for systems without getdents()
+
+1999-08-08  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Updated plib to the latest version.
+	  (also updated configure and config.h.in, and other sources
+	  that needed to be updated due to that)
+
+1999-02-16  Peter Eriksson  <pen@lysator.liu.se>
+
+	* safeio/s_accept2() created.
+
+	* PASV timeout using s_accept2() now.
+
+	* ident.c: IDENT (RFC1413) lookup code implemented
+
+	* Default to ~ftp for server_ftp_dir if non specified.
+
+1999-02-16  Peter Eriksson  <pen@lysator.liu.se>
+
+	* plib/timeout.c: Modified to allow multiple timeouts for
+	  non-threaded systems. 'struct timeout -> TIMEOUT'.
+
+	* PASV accept timeout created (but should be implemented
+ 	  in a better way).
+
+1999-02-11  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Major restructuring of the files. All non-FTPD-specific
+	  files now reside in the "plib" subdir.
+
+1999-02-09  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Xferlog ala Wu-ftpd implemented.
+
+	* ABORting transfers fixed for threaded systems again.
+
+1999-02-09 Peter Eriksson  <pen@lysator.liu.se>
+
+	* s_strcpy() and s_strcat() created and used in most files.
+
+	* Add uid->username lookup. Added "hide_uidgid" variable to ftplist.
+
+	* Added "welcome" message
+
+1999-02-08  Peter Eriksson  <pen@lysator.liu.se>
+
+	* Assume device files are 16bit 8/8 unless <sys/mkdev.h>
+	  exists.
+	  
+	* "SITE UMASK" added.
+	
+	* Support for User-specific anonymous FTP dirs added.
+	
+	* Fixed all inet_ntoa() calls to use s_inet_ntoa() instead.
+
+1999-02-08  Peter Eriksson  <pen@lysator.liu.se>
+
+	* File upload/delete/mkdir etc implemented. Enable
+	  with command line switch "--read-write".
+
+	* s_sendfile() renamed to s_copyfd().
+
+	* etc/ident.init -> etc/pftpd.init
+
+	* Daemon binary is now called "pftpd" instead of "ftpd".
+
+1999-02-07  Peter Eriksson  <pen@lysator.liu.se>
+
+	* SIGURG/ABOR handling fixed for non-threaded systems.
+	
+	* ChangeLog created
+
+

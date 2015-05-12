@@ -1,0 +1,54 @@
+* Handle server thread termination gracefully!
+
+* Verify errno handling of getpwnam_r() on all Unixes and variants.
+
+* Support all configurable options in the pftpd.conf file
+
+* Print symlinks pointing outside the designated root area
+  as "???" ?
+
+* Set the umask value to something good when creating new
+  files.
+
+* Support login with usernames (no password) and put the users
+  directly in the user public directory.
+
+* Support login with pseudo-names and direct to specific directories.
+
+* Verify all the result codes for the commands.
+
+* Use real path for Welcome message, not virtual.
+
+* Upload only into special directories (outside normal root tree)?
+
+* Implement the "SITE" commands (UMASK (done), CHMOD, etc)
+
+* Full File globbing (*, ?, []) in LIST, NLST. (Now implements a
+  limited version that handles * and ? in the filename part).
+
+* Log aborted file xfer's with an "i" and completed with an "c"
+
+* An option to print symlinks as files/dir's instead of symlinks.
+
+* An option to not print uid/gid (instead use "ftp ftp").
+
+* Don't timeout when data transfers in progress?
+
+* Create s_readlink()
+
+* Lookup client hostname (if enabled) in parallell with the command
+  sequence
+
+* Lookup IDENT information (if enabled) in parallell with the command
+  sequence.
+
+* Fix all "XXX:"'s in the code */
+
+* Security reviews by other people.
+
+Some "maybe"s:
+
+* Support STAT while transfering files for nonthreaded systems.
+
+* Reimplement a safe glob().
+

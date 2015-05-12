@@ -1,0 +1,174 @@
+/* config.h.in */
+
+#ifndef PFTPD_CONFIG_H
+#define PFTPD_CONFIG_H
+
+/* Handle the 'inline' keyword.  */
+#undef inline
+
+/* Handle the 'const' keyword.  */
+#undef const
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef gid_t
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef mode_t
+
+/* Define to `long' if <sys/types.h> doesn't define.  */
+#undef off_t
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef pid_t
+
+/* Define to `unsigned' if <sys/types.h> doesn't define.  */
+#undef size_t
+  
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef ssize_t
+
+/* Define to 'unsigned int' if <sys/types.h> doesn't define. */
+#undef UINT32
+
+/* Define to 'unsigned short' if <sys/types.h> doesn't define. */
+#undef UINT16
+
+/* Define to 'unsigned char' if <sys/types.h> doesn't define. */
+#undef UINT8
+
+/* Define to `int' ('size_t' if on AIX) if <sys/socket.h> doesn't define.  */
+#undef socklen_t
+
+/* Define to 'int' if <signal.h> doesn't define. */
+#undef RETSIGTYPE
+
+/* Define to if sprintf() doesn't return 'int' */
+#undef SPRINTF_RETVAL_POINTER
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if you have pthread_mutex_t definition in sys/types.h  */
+#undef HAVE_PTHREAD_MUTEX_T
+
+/* Define if you have the strerror function.  */
+#undef HAVE_STRERROR
+
+/* Define if you have the random function.  */
+#undef HAVE_RANDOM
+
+/* Define if you have the srandom function.  */
+#undef HAVE_SRANDOM
+
+/* Define if you have the setsid function.  */
+#undef HAVE_SETSID
+
+/* Define if you have the ftruncate function.  */
+#undef HAVE_FTRUNCATE
+
+/* Define if you have the sigaction function.  */
+#undef HAVE_SIGACTION
+
+/* Define if you have the pread function.  */
+#undef HAVE_PREAD
+
+/* Define if you have the sendfile function.  */
+#undef HAVE_SENDFILE
+
+/* Define if you have the mmap function.  */
+#undef HAVE_MMAP
+
+/* Define if you have the getpwnam_r function.  */
+#undef HAVE_GETPWNAM_R
+
+/* Define if you have the getpwuid_r function.  */
+#undef HAVE_GETPWUID_R
+
+/* Define if you have the Posix-style getpw.._r functions.  */
+#undef HAVE_POSIX_GETPW
+
+/* Define if you have the UI-style getpw.._r functions.  */
+#undef HAVE_UI_GETPW
+
+/* Define if you have the DCE-style getpw.._r functions.  */
+#undef HAVE_DCE_GETPW
+
+/* Define if you have the thr_setconcurrency function.  */
+#undef HAVE_THR_SETCONCURRENCY
+
+/* Define if you have the snprintf function.  */
+#undef HAVE_SNPRINTF
+
+/* Define if you have the snprintf function.  */
+#undef HAVE_VSNPRINTF
+
+/* Define if you have the memcpy function.  */
+#undef HAVE_MEMCPY
+
+/* Define if you have the uname function.  */
+#undef HAVE_UNAME
+
+/* Define if you have the flock function.  */
+#undef HAVE_FLOCK
+
+/* Define if you have the poll function.  */
+#undef HAVE_POLL
+
+/* Define if you have the socket function.  */
+#undef HAVE_SOCKET
+
+/* Define if you have the door_info function.  */
+#undef HAVE_DOOR_INFO
+
+/* Define if you have the door_call function.  */
+#undef HAVE_DOOR_CALL
+
+/* Define if you have the gethostbyname function.  */
+#undef HAVE_GETHOSTBYNAME
+
+/* Define if you have the <sys/mkdev.h> header file.  */
+#undef HAVE_SYS_MKDEV_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the <door.h> header file.  */
+#undef HAVE_DOOR_H
+
+/* Define if you have the <sys/filio.h> header file.  */
+#undef HAVE_SYS_FILIO_H
+
+/* Define if you have the <pthread.h> header file.  */
+#undef HAVE_PTHREAD_H
+
+/* Define if you have the <thread.h> header file.  */
+#undef HAVE_THREAD_H
+
+/* Define if you have the nsl library (-lnsl).  */
+#undef HAVE_LIBNSL
+
+/* Define if you have the socket library (-lsocket).  */
+#undef HAVE_LIBSOCKET
+
+/* Define if you have any working threads library. */
+#undef HAVE_THREADS
+
+/* Define if you have the pthread library (-lpthread).  */
+#undef HAVE_LIBPTHREAD
+
+/* Define if you have the AIX pthreads library (-lpthreads).  */
+#undef HAVE_LIBPTHREADS
+
+/* Define if you have the cma library (-lcma).  */
+#undef HAVE_LIBCMA
+
+/* Define if you have the thread library (-lthread).  */
+#undef HAVE_LIBTHREAD
+
+/* If we need to declare sys_errlist[] as external */
+#undef NEED_SYS_ERRLIST
+
+/* Define if you have IPv6 capability */
+#undef INET6
+
+#endif

@@ -1,0 +1,168 @@
+		Peter's Anonymous FTP Daemon
+
+			Version 1.0
+
+			2005-02-01
+
+	Author: Peter Eriksson <pen@lysator.liu.se>
+
+
+
+Pftpd is an implementation of a multithreaded anonymous FTP server.
+
+
+
+LICENSE:
+
+This program is free software; you can redistribute it and/or
+modify it as you wish - as long as you don't claim that you wrote
+it.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+FEATURES
+
+* Uses multithreading on systems with usable threads systems in
+  order to minimize the system impact and improve response time.
+
+* Uses sendfile() on systems that support it to increase performance
+  and decrease system impact.
+
+* Has a built in "ls".
+
+* Supports user-specific anonymous directories (a subdir of the
+  user's normal home directory.
+
+* Can optionally "contain" the available environment using
+  chroot'ed (but then the user-specific anonymous directories
+  won't work for obvious reasons). This is *not* the default,
+  but see below.
+
+* Supports active and passive transfers
+
+* Supports restartable transfers (both Binary/Image and ASCII).
+
+* By default only supports READ access to the files (all the
+  commands that can create or modify files are disabled). Using an
+  option you can enable READ/WRITE mode - but see below.
+
+
+
+DOWNLOAD:
+
+The main FTP site for it is:
+
+	ftp://ftp.lysator.liu.se/pub/unix/pftpd/
+
+
+IMPORTANT FILES AND DIRECTORIES
+
+The default paths to important files and directories are:
+
+Base prefix is /usr/local 	(--prefix=/usr/local)
+
+$PREFIX /etc   /pftpd.conf 	(--sysconfdir=$PREFIX/etc)
+
+The rest have defaults that depend on the configure options, but can
+also be modified using the configuration file and/or command line options.
+
+$PREFIX /var   /run/pftpd.pid 	(--localstatedir=$PREFIX/var)
+$PREFIX /var   /rpad		(--localstatedir=$PREFIX/var)
+$PREFIX /share /ftp		(--datadir=$PREFIX/share)
+
+The last path is normally not used - it defaults to the HOME
+directory of any "ftp" user if such a users is defined.
+
+
+
+INSTALLATION:
+
+Configure and compile it with:
+
+	./configure ; make
+
+Copy the binary "src/pftpd" and optionally "src/rpad" to a system
+directory of your choice and then select how you want to start them
+(rpad first). Pftpd supports three different modes of startup:
+
+	1. Standalone daemon. Just run the binary and it will fork
+		and put itself into the background
+	2. Start it from /etc/inetd.conf
+	3. Start it from /etc/inittab (for systems with a SysV init).
+
+Pftpd has a number of command line options, try:
+
+	src/pftpd --help
+
+for a listing of them all. By default Pftpd will run in read-only
+mode, and only allow FTP commands that retreive files or listings.
+
+
+WHAT'S THIS 'RPAD' THING?
+
+RPAD stands for "Restricted Port Allocation Daemon" and is used
+by Pftpd to be able to create sockets bound to the FTP-DATA port
+(which is in the restricted area) even though it doesn't run as root.
+
+
+USER SPECIFIC PUBLIC DIRECTORIES
+
+By enabling the option for user directories the FTP server will
+try to access the specified directory when a client tries to access
+something via a path like:
+
+	/~USER/something
+
+Since the FTP server runs as user ftp or nobody (by default), for this
+to work the users' home directory and the specificed public directory
+must be accessible by user nobody and/or ftp.
+
+It is sufficient with "x" rights for "others" for the home directory,
+but you probably want both "x" and "r" rights for the public directory.
+
+
+
+CHROOTED ENVIRONMENT
+
+Pftpd by default will *not* chroot to the "anonymous" public area.
+Instead it tries to make sure that any filename or path's specified
+by an FTP client can't reach any files outside the designated area.
+
+This means that symbolic files pointing outside the area *will* work.
+
+This also means that it allows user-specific anonymous directories in
+the users' home directories.
+
+
+
+READ/WRITE MODE
+
+By default the FTP server only allows the commands that doesn't
+(potentially - access rights also apply of course) modify old or
+create new files.
+
+You can enable READ/WRITE mode, but then you should be aware that
+all files created will be owned by user that pftpd runs as
+(normally "ftp" or "nobody") or files that the FTP server
+tries to modify must be set up so that the user pftpd runs
+as have enough access rights.
+
+
+
+BUG REPORTS
+
+Please send bug reports to pen@lysator.liu.se - however note that,
+even though I might not respond immediately, I will read your email
+eventually.
+
+If there is a *REALLY* urgent security-related issue with PFTPD that
+needs *IMMEDIATELY* attention, please call the Linköping University
+phone exchange and request to be connected to my work office extension
+at the Physics Department (IFM).
+
+The phone number for Linköping University is: +46-13-281000
+

@@ -1,0 +1,43 @@
+# Makefile.in for Pftpd 1.0 - doc
+
+prefix = /ifm
+mandir = ${prefix}/man
+
+srcdir = .
+
+
+INSTALL = /pkg/gnu/bin/ginstall -c
+SGML2MAN = docbook2man
+
+
+
+MANPAGES = pftpd.1 rpad.1
+
+all:	man
+
+man:	$(MANPAGES)
+
+pftpd.1:	pftpd.sgml
+	$(SGML2MAN)	pftpd.sgml
+
+rpad.1:		rpad.sgml
+	$(SGML2MAN)	rpad.sgml
+
+
+# Installing
+install:	man
+	-mkdir -p $(mandir)/man1
+	for P in $(MANPAGES) ; do \
+		$(INSTALL) -m 644 $${P} $(mandir)/man1; \
+	done
+
+
+
+# Cleaning up
+
+clean mostlyclean:
+	rm -f manpage.* core *~ \#*
+
+
+distclean maintainer-clean: mostlyclean
+	rm -f Makefile
